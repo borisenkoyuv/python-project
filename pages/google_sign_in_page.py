@@ -10,7 +10,7 @@ class GoogleSignInPage(BasePage):
     EMAIL_PHONE_PHONE_ERROR = "#i8"
     FORGOT_EMAIL_BUTTON = "role=button[name='Forgot email?']"
     FORGOT_EMAIL_INPUT_FIELD = "#recoveryIdentifierId"
-
+    NO_NETWORK_POP_UP_TITLE = "#c0"
 
     def open(self):
         self.page.goto(self.URL)
@@ -38,3 +38,6 @@ class GoogleSignInPage(BasePage):
 
     def is_forgot_email_field_present(self):
         self.be_visible(self.FORGOT_EMAIL_INPUT_FIELD)
+
+    def is_pop_up_title_present(self, text):
+        self.has_text(self.NO_NETWORK_POP_UP_TITLE, text)

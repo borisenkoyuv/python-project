@@ -11,10 +11,10 @@ class BasePetApiClass:
     headers_create = {"Content-Type": "application/json", "Accept": "application/json"}
     payload = Path("data/create_pet.json").read_text(encoding="utf-8").encode("utf-8")
 
-    def make_post_pet_request(self, url_input, data, id):
+    def make_post_pet_request(self, url_input, data, input_id):
         encoded_data = parse.urlencode(data).encode("utf-8")
         request_formed = request.Request(
-            url=f"{url_input}{id}",
+            url=f"{url_input}{input_id}",
             headers=self.headers_update,
             data=encoded_data,
             method="POST",

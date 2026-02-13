@@ -9,13 +9,14 @@ from pages.google_sign_in_page import GoogleSignInPage
 
 class TestBaseSignUp:
     default_locale = "en-GB"
+    valid_email = "test@gmail.com"
     texts = json.loads(Path("data/sign_in_texts.json").read_text(encoding="utf-8"))
 
     @pytest.fixture
     def page(self, request):
         locale = getattr(request, "language", self.default_locale)
         with sync_playwright() as playwright:
-            browser = playwright.chromium.launch(channel="chrome", headless=True)
+            browser = playwright.chromium.launch(channel="chrome", headless=False)
             context = browser.new_context(locale=locale)
             page = context.new_page()
             yield page
@@ -52,3 +53,14 @@ class TestBaseSignUp:
         sign_in_page.open()
         sign_in_page.click_forgot_email()
         sign_in_page.is_forgot_email_field_present()
+
+    @pytest.mark.tc_id("TC-SIGN-IN-008")
+    def test_no_internet_pop_up(self, page):
+        sign_in_page = GoogleSignInPage(page)
+        sign_in_page.open()
+        sign_in_page.enter_email(self.valid_email)
+        page.context.set_offline(True)
+        sign_in_page.click_next()
+        sign_in_page.is_pop_up_title_present(
+            self.texts["signin"]["no_network"]["title"]
+        )

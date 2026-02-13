@@ -20,18 +20,18 @@ class TestBasePet(BasePetApiClass):
         assert response.get("message") == f"{self.valid_id}"
 
     @pytest.mark.parametrize(
-        "id", [-675657, 1000000000], ids=["TC-POST-PET-009", "TC-POST-PET-010"]
+        "input_id", [-675657, 1000000000], ids=["TC-POST-PET-009", "TC-POST-PET-010"]
     )
-    def test_pet_request_not_found(self, id):
-        response = self.make_post_pet_request(self.base_url, self.valid_data, id)
+    def test_pet_request_not_found(self, input_id):
+        response = self.make_post_pet_request(self.base_url, self.valid_data, input_id)
         assert response.get("code") == 404
         assert response.get("message") == "not found"
 
     @pytest.mark.parametrize(
-        "id, code",
+        "input_id, code",
         [("", 415), ("test", 404)],
         ids=["TC-POST-PET-008", "TC-POST-PET-011"],
     )
-    def test_pet_request_wrong_type(self, id, code):
-        response = self.make_post_pet_request(self.base_url, self.valid_data, id)
+    def test_pet_request_wrong_type(self, input_id, code):
+        response = self.make_post_pet_request(self.base_url, self.valid_data, input_id)
         assert response.get("code") == code
