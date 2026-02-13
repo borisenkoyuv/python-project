@@ -1,0 +1,10 @@
+{
+  "signin": {
+    "title": "Sign in",
+    "title_de": "Anmeldung",
+    "email_field": {
+      "error_empty": "Enter an email or phone number",
+      "error_invalid": "Enter a valid email or phone number"
+    }
+  }
+}
